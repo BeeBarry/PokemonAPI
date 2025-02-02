@@ -39,9 +39,50 @@ app.MapGet("/pokemons", () =>
     return Results.Ok(pokemons);
 });
 
-app.Run();
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
+//Read by ID
+app.MapGet("/pokemon/{id}", (int id) =>
 {
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
+    var pokemon = pokemons.Find(p => p.Id == id);
+
+    if (pokemon == null)
+    {
+        return Results.NotFound("Sorry,this pokemon does not exist");
+    }
+
+    return Results.Ok(pokemon);
+});
+
+//update
+app.MapPut("/pokemon/{id}", (Pokemon updatePokemon, int id) =>
+{
+    var pokemon = pokemons.Find(p => p.Id == id);
+    if (pokemon == null)
+    {
+        return Results.NotFound("This pokemon does not exist mate");
+    }
+
+  
+    pokemons[id] = updatePokemon;
+    
+    
+    return Results.Ok(pokemon);
+});
+
+//Delete
+app.MapDelete("/pokemon/{id}", (int id) =>
+{
+    var pokemon = pokemons.Find(p => p.Id == id);
+
+    if (pokemon == null)
+    {
+        return Results.NotFound("not found");
+    }
+
+    pokemons.Remove(pokemon);
+
+    return Results.Ok("works");
+});
+
+
+app.Run();
