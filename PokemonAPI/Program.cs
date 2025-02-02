@@ -26,6 +26,14 @@ var pokemons = new List<Pokemon>
     new Pokemon { Id = 3, Name = "Charmander", Type = "Fire" }
 };
 
+//Create
+app.MapPost("/pokemon", (Pokemon pokemon) =>
+{
+    pokemons.Add(pokemon);
+    return Results.Ok(pokemon);
+});
+
+// Read all
 app.MapGet("/pokemons", () =>
 {
     return Results.Ok(pokemons);
