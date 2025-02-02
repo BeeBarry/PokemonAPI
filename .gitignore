@@ -1,0 +1,22 @@
+# Build output
+bin/
+obj/
+
+# IDE files
+.vs/
+.idea/
+.vscode/
+
+# User-specific files
+*.user
+
+# Config files
+appsettings.Development.json
+appsettings.Production.json
+
+# OS files
+.DS_Store
+
+# Packages
+packages/
+*.nupkg
