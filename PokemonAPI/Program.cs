@@ -1,3 +1,5 @@
+using PokemonAPI;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -16,25 +18,18 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
+var pokemons = new List<Pokemon>
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+    new Pokemon { Id = 1, Name = "Bulbasaur", Type = "Grass" },
+    new Pokemon { Id = 2, Name = "Ivysaur", Type = "Grass" },
+    new Pokemon { Id = 2, Name = "Venosaur", Type = "Grass" },
+    new Pokemon { Id = 3, Name = "Charmander", Type = "Fire" }
 };
 
-app.MapGet("/weatherforecast", () =>
-    {
-        var forecast = Enumerable.Range(1, 5).Select(index =>
-                new WeatherForecast
-                (
-                    DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                    Random.Shared.Next(-20, 55),
-                    summaries[Random.Shared.Next(summaries.Length)]
-                ))
-            .ToArray();
-        return forecast;
-    })
-    .WithName("GetWeatherForecast")
-    .WithOpenApi();
+app.MapGet("/pokemons", () =>
+{
+    return Results.Ok(pokemons);
+});
 
 app.Run();
 
